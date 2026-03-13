@@ -27,14 +27,26 @@ pip install pdd-cli
 pip install -r https://raw.githubusercontent.com/jamesdlevine/pdd-vscode-extension/main/tester-install.txt
 ```
 
-### Step 2: Install VS Code extension
+### Step 2: Install the extension
+
+Download the latest `.vsix` from the [Releases](https://github.com/jamesdlevine/pdd-vscode-extension/releases) page, or via the command line:
 
 ```bash
-# Download the latest .vsix
 curl -fsSL -o pdd-vscode.vsix $(curl -fsSL https://api.github.com/repos/jamesdlevine/pdd-vscode-extension/releases/latest | python3 -c "import sys,json; print([a['browser_download_url'] for a in json.load(sys.stdin)['assets'] if a['name'].endswith('.vsix')][0])")
+```
 
-# Install it
-code --install-extension pdd-vscode.vsix
+Then install it — pick whichever method works for your IDE:
+
+**From the IDE** (works in VS Code, Cursor, Windsurf, etc.):
+1. Open the Extensions panel (Ctrl+Shift+X)
+2. Click the `...` menu at the top
+3. Select **"Install from VSIX..."**
+4. Browse to the downloaded `.vsix` file
+
+**From the command line** (if you have the CLI installed):
+```bash
+code --install-extension pdd-vscode.vsix          # VS Code
+cursor --install-extension pdd-vscode.vsix        # Cursor
 ```
 
 ### Step 3: Tell VS Code which Python environment to use

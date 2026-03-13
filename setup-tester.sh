@@ -67,12 +67,21 @@ else
   VSIX_FILE="/tmp/pdd-vscode.vsix"
   curl -fsSL -o "$VSIX_FILE" "$VSIX_URL"
 
-  if command -v code &>/dev/null; then
-    code --install-extension "$VSIX_FILE"
-    echo "  Extension installed."
-  else
+  # Try known IDE CLI names, otherwise instruct manual install
+  INSTALLED=false
+  for cli in code cursor; do
+    if command -v "$cli" &>/dev/null; then
+      "$cli" --install-extension "$VSIX_FILE"
+      echo "  Extension installed via $cli."
+      INSTALLED=true
+      break
+    fi
+  done
+
+  if ! $INSTALLED; then
     echo "  Downloaded to: $VSIX_FILE"
-    echo "  Install manually: code --install-extension $VSIX_FILE"
+    echo "  To install: open your IDE's Extensions panel (Ctrl+Shift+X),"
+    echo "  click '...' > 'Install from VSIX...' and select the file."
   fi
 fi
 
