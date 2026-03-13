@@ -29,10 +29,12 @@ pip install -r https://raw.githubusercontent.com/jamesdlevine/pdd-vscode-extensi
 
 ### Step 2: Install VS Code extension
 
-Download the latest `.vsix` from the [Releases](https://github.com/jamesdlevine/pdd-vscode-extension/releases) page, then:
-
 ```bash
-code --install-extension pdd-vscode-0.1.0.vsix
+# Download the latest .vsix
+curl -fsSL -o pdd-vscode.vsix $(curl -fsSL https://api.github.com/repos/jamesdlevine/pdd-vscode-extension/releases/latest | python3 -c "import sys,json; print([a['browser_download_url'] for a in json.load(sys.stdin)['assets'] if a['name'].endswith('.vsix')][0])")
+
+# Install it
+code --install-extension pdd-vscode.vsix
 ```
 
 ### Step 3: Tell VS Code which Python environment to use
