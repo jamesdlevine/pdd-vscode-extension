@@ -37,11 +37,9 @@ curl -fsSL -o pdd-vscode.vsix $(curl -fsSL https://api.github.com/repos/jamesdle
 
 Then install it — pick whichever method works for your IDE:
 
-**From the IDE** (works in VS Code, Cursor, Windsurf, etc.):
-1. Open the Extensions panel (Ctrl+Shift+X)
-2. Click the `...` menu at the top
-3. Select **"Install from VSIX..."**
-4. Browse to the downloaded `.vsix` file
+**From the IDE:**
+- **VS Code / Windsurf**: Extensions panel (Ctrl+Shift+X) → `...` menu → **"Install from VSIX..."**
+- **Cursor**: Open the Command Palette (Ctrl+Shift+P) → type **"Install from VSIX"** → select the file
 
 **From the command line** (if you have the CLI installed):
 ```bash
