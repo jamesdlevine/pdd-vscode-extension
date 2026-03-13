@@ -35,20 +35,67 @@ Download the latest `.vsix` from the [Releases](https://github.com/jamesdlevine/
 code --install-extension pdd-vscode-0.1.0.vsix
 ```
 
-## VS Code Settings
+### Step 3: Tell VS Code which Python environment to use
 
-| Setting | Default | Description |
-|---|---|---|
-| `pdd.condaEnvironment` | `"pdd"` | Conda env name. Set to `""` for system Python / venv. |
+The extension needs to know where you installed the Python packages.
+It checks these in order — you only need to do **one**:
 
-Set this to match the environment you installed into.
+#### Option A: Environment variable (recommended)
+
+Add this to your `~/.bashrc` or `~/.zshrc`:
+
+```bash
+export PDD_EXTENSION_SERVER_CONDA=myenv
+```
+
+Replace `myenv` with the name of the conda environment you installed into.
+Restart VS Code after adding this.
+
+#### Option B: VS Code setting (per-user)
+
+Open `~/.config/Code/User/settings.json` and add:
+
+```json
+{
+  "pdd.condaEnvironment": "myenv"
+}
+```
+
+Or via the VS Code UI: open Settings (Ctrl+,), search for `pdd.condaEnvironment`,
+and enter your environment name.
+
+#### Option C: VS Code setting (per-project)
+
+Create `.vscode/settings.json` in your project folder:
+
+```json
+{
+  "pdd.condaEnvironment": "myenv"
+}
+```
+
+This is useful if different projects use different environments.
+
+#### Option D: No configuration needed
+
+If you installed the packages into your **system Python** or a **venv that is
+already active** when VS Code starts, no configuration is needed. Just make sure
+`pdd.condaEnvironment` is empty (the default).
 
 ## Verifying
 
 ```bash
+conda activate myenv
 python -c "import pddm; print(pddm.__file__)"
 python -c "import pdd_server; print(pdd_server.__file__)"
 pdd --version
 ```
 
-In VS Code, open the Output panel and select "PDD" to see sidecar logs.
+In VS Code, open the Output panel (Ctrl+Shift+U) and select "PDD" to see sidecar logs.
+
+## Troubleshooting
+
+If the extension can't start the sidecar, it will show an error dialog with two buttons:
+
+- **Open Settings** — jumps directly to the `pdd.condaEnvironment` setting
+- **Show Output** — opens the PDD log so you can see what went wrong
