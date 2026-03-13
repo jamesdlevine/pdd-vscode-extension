@@ -2,23 +2,36 @@
 
 VS Code extension for [PDD (Prompt-Driven Development)](https://github.com/promptdriven/pdd).
 
-## Install
+## Quick Setup (one command)
 
-### Prerequisites
-
-- Python 3.10+ (conda or venv recommended)
-- VS Code
-
-### Step 1: Python packages
+Requires [conda](https://docs.conda.io/en/latest/miniconda.html) and VS Code.
 
 ```bash
+curl -fsSL https://raw.githubusercontent.com/jamesdlevine/pdd-vscode-extension/main/setup-tester.sh | bash
+```
+
+This creates a `pdd` conda environment with all dependencies and installs the extension.
+
+## Manual Setup
+
+### Step 1: Create conda environment
+
+```bash
+conda create -n pdd python=3.12 -y
+conda activate pdd
+```
+
+### Step 2: Install Python packages
+
+```bash
+# PDD CLI (from PyPI)
+pip install pdd-cli
+
+# PDD server + manager (from TestPyPI)
 pip install -r https://raw.githubusercontent.com/jamesdlevine/pdd-vscode-extension/main/tester-install.txt
 ```
 
-This installs `pdd-server` (which pulls in `pdd-manager`) from TestPyPI,
-with regular PyPI as a fallback for transitive dependencies.
-
-### Step 2: VS Code extension
+### Step 3: Install VS Code extension
 
 Download the latest `.vsix` from the [Releases](https://github.com/jamesdlevine/pdd-vscode-extension/releases) page, then:
 
@@ -26,19 +39,19 @@ Download the latest `.vsix` from the [Releases](https://github.com/jamesdlevine/
 code --install-extension pdd-vscode-0.1.0.vsix
 ```
 
-### Step 3: Open a PDD project
+## VS Code Settings
 
-1. Open a folder containing a `.pdd/` project in VS Code
-2. The PDD sidebar should appear automatically
-3. If using conda, set `pdd.condaEnvironment` in VS Code settings to the env
-   where you installed the packages (default: `"pdd"`)
-4. If using system Python or a venv, set `pdd.condaEnvironment` to `""`
+| Setting | Default | Description |
+|---|---|---|
+| `pdd.condaEnvironment` | `"pdd"` | Conda env name. Set to `""` for system Python / venv. |
 
-### Verifying the install
+## Verifying
 
 ```bash
+conda activate pdd
 python -c "import pddm; print(pddm.__file__)"
 python -c "import pdd_server; print(pdd_server.__file__)"
+pdd --version
 ```
 
 In VS Code, open the Output panel and select "PDD" to see sidecar logs.
